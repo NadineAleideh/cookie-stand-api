@@ -4,7 +4,7 @@ namespace SalmonCookiesAPI.Models.Interfaces
 {
     public interface ICookieStand
     {
-        Task Create(CookieStandDto cookieStand);
+        Task<CookieStandViewDto> Create(CookieStandDto cookieStand);
 
         Task<IEnumerable<CookieStandViewDto>> GetAll();
 

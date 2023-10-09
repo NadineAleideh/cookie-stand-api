@@ -64,13 +64,13 @@ namespace SalmonCookiesAPI.Controllers
 
 
         // POST: api/CookieStands
-
         [HttpPost]
-        public async Task<ActionResult<CookieStand>> PostCookieStand(CookieStandDto cookieStand)
+        public async Task<ActionResult<CookieStandViewDto>> PostCookieStand(CookieStandDto cookieStand)
         {
-            await _cookieStandService.Create(cookieStand);
-            return Ok();
+            var createdCookieStand = await _cookieStandService.Create(cookieStand);
+            return CreatedAtAction(nameof(GetCookieStand), new { id = createdCookieStand.Id }, createdCookieStand);
         }
+
 
         // DELETE: api/CookieStands/5
         [HttpDelete("{id}")]

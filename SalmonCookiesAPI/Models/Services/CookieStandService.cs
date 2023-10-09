@@ -16,7 +16,7 @@ namespace SalmonCookiesAPI.Models.Services
 
         }
 
-        public async Task Create(CookieStandDto cookieStand)
+        public async Task<CookieStandViewDto> Create(CookieStandDto cookieStand)
         {
             var cooke = new CookieStand()
             {
@@ -26,7 +26,6 @@ namespace SalmonCookiesAPI.Models.Services
                 MaximumCustomersPerHour = cookieStand.MaximumCustomersPerHour,
                 AverageCookiesPerSale = cookieStand.AverageCookiesPerSale,
                 Owner = cookieStand.Owner
-
             };
 
             await _context.CookieStands.AddAsync(cooke);
@@ -48,18 +47,38 @@ namespace SalmonCookiesAPI.Models.Services
                     salesvalue = random.Next(min, max),
                 };
 
-
-
                 hours.Add(hourlySale);
             }
 
-
             cooke.hourlySale = hours;
 
-
             await _context.SaveChangesAsync();
-            //return cookieStand;
+
+            // Return the created CookieStand record
+            var newcooke = new CookieStandViewDto()
+            {
+                Id = cooke.Id,
+                Location = cooke.Location,
+                Description = cooke.Description,
+                MaximumCustomersPerHour = cooke.MaximumCustomersPerHour,
+                MinimumCustomersPerHour = cooke.MinimumCustomersPerHour,
+                AverageCookiesPerSale = cooke.AverageCookiesPerSale,
+                Owner = cooke.Owner,
+            };
+
+            List<int> h = new List<int>();
+
+            foreach (var item in cooke.hourlySale)
+            {
+                h.Add(item.salesvalue);
+            }
+
+            newcooke.hourlySale = h;
+
+            return newcooke;
+
         }
+
 
         public async Task Delete(int id)
         {
