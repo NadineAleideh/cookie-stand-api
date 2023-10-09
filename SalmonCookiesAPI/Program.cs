@@ -4,6 +4,7 @@ using SalmonCookiesAPI.Data;
 using SalmonCookiesAPI.Models.Interfaces;
 using SalmonCookiesAPI.Models.Services;
 
+
 namespace SalmonCookiesAPI
 {
     public class Program
@@ -30,22 +31,39 @@ namespace SalmonCookiesAPI
 
 
 
-
-
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+
+
+            builder.Services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(
+                    policy =>
+                    {
+                        policy.AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader();
+                    }
+                    );
+            });
+
+
             builder.Services.AddSwaggerGen();
 
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
 
+            app.UseCors();
+
             app.UseSwagger();
             app.UseSwaggerUI();
 
 
             app.UseHttpsRedirection();
+
+         
 
             app.UseAuthorization();
 
