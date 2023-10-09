@@ -125,7 +125,7 @@ This is the backend API for Pat's Salmon Cookie Stand application. It provides e
 
   Retrieves a single cookie stand by its unique ID.
 
-```
+```json
 {
   "id": 3,
   "location": "Jerash",
